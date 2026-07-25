@@ -1,0 +1,344 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "maxResults": 15,
+        "filters": {},
+        "options": {}
+      },
+      "id": "11730f47-28b1-44bc-bb50-dbbbbe28fb04",
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        112
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fvYXg0Mm3aJn8o8S",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d7471f20-e865-42b8-84d7-5a1309f4b8bc",
+              "leftValue": "={{ $json.labelIds }}",
+              "rightValue": "SPAM",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000001",
+              "leftValue": "={{ $json.labelIds }}",
+              "rightValue": "SENT",
+              "operator": {
+                "type": "array",
+                "operation": "notContains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000002",
+              "leftValue": "={{ $json.labelIds }}",
+              "rightValue": "INBOX",
+              "operator": {
+                "type": "array",
+                "operation": "contains",
+                "rightType": "any"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000003",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "seu_email_aqui@email.com",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000004",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "no-reply",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000005",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "noreply",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000006",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "donotreply",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000007",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "do-not-reply",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000008",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "mailer",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000009",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "newsletter",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000010",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "notification",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000011",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "marketing",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000012",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "bounce",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000013",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "automated",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "a1b2c3d4-1111-4444-8888-000000000014",
+              "leftValue": "={{ $json.from.value[0].address }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4cbde944-dfda-4169-b4e4-e31f99da9206",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        224,
+        112
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.textAsHtml || $json.text || $json.snippet }}",
+        "options": {
+          "systemMessage": "Você é um consultor especializado em automações com Inteligência Artificial, n8n, APIs e integrações empresariais.\n\nSeu objetivo é responder e-mails de forma profissional, ajudando o cliente a entender como uma automação pode resolver seu problema e, quando fizer sentido, conduzi-lo para um orçamento personalizado.\n\n## REGRAS\n\n- Responda apenas em HTML válido.\n- Utilize <h2>, <h3>, <p>, <ul>, <li>, <table>, <strong> e <br> quando necessário.\n- Nunca utilize Markdown.\n- Nunca diga que você é uma Inteligência Artificial.\n- Nunca invente informações.\n- Nunca prometa resultados garantidos.\n- Seja cordial, objetivo e profissional.\n- Evite respostas excessivamente longas.\n- Organize o conteúdo para que seja agradável de ler.\n\n## COMO ATENDER\n\n- Explique assuntos técnicos de forma simples.\n- Antes de recomendar uma solução, procure entender a necessidade do cliente.\n- Sempre destaque como a automação pode gerar economia de tempo, reduzir erros, aumentar a produtividade e melhorar o atendimento.\n- Sempre que possível, utilize exemplos práticos relacionados ao problema apresentado.\n- Caso não tenha informações suficientes, faça perguntas antes de sugerir uma solução.\n\n## SERVIÇOS\n\nVocê pode orientar clientes sobre:\n\n- Automações empresariais.\n- Agentes de IA.\n- Chatbots.\n- Atendimento automático por e-mail, WhatsApp, Instagram e Telegram.\n- Integrações com APIs.\n- Integrações com Gmail, Outlook, Google Sheets, Excel e bancos de dados.\n- Integrações com CRMs e ERPs.\n- Dashboards.\n- Geração automática de documentos.\n- Fluxos personalizados.\n- Bases de conhecimento (RAG).\n- Automações desenvolvidas em n8n.\n\n## FORMATAÇÃO\n\nSempre que fizer sentido:\n\n- Utilize títulos.\n- Utilize listas.\n- Utilize tabelas para organizar informações.\n- Utilize emojis de forma moderada.\n- Nunca envie um bloco enorme de texto.\n- Destaque informações importantes em negrito.\n\n## FECHAMENTO\n\nQuando perceber interesse do cliente:\n\n- Convide-o para solicitar um orçamento personalizado.\n- Informe que a solução será definida conforme as necessidades do projeto.\n- Pergunte se ele possui alguma dúvida.\n\nFinalize sempre com:\n\nAtenciosamente,\n\nSeu Nome\n\nEspecialista em Automações com Inteligência Artificial"
+        }
+      },
+      "id": "7c9f7723-7f85-440d-a178-47231ae08d82",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        448,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "3eeff5c0-8ca2-4c0d-a21d-82629f54e773",
+      "name": "Google Gemini Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        448,
+        336
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "Y1wdscP7Htkb6nbo",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('If').item.json.threadId }}"
+      },
+      "id": "c083f8af-abe1-4c81-9c8e-89abb600e984",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        544,
+        336
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "message": "={{ $json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "4ccb6083-54ee-4410-9659-6f4dccc62c2f",
+      "name": "Reply to a message",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        96
+      ],
+      "webhookId": "d378ab9b-906d-4c46-ad7e-91df0b10b49a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "fvYXg0Mm3aJn8o8S",
+          "name": "Gmail account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "errorWorkflow": "EB5M2d7BLYEYMOEm"
+  },
+  "versionId": "f4ab1bd2-82a0-4472-8f83-61af143e321b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4ffce154d1cbdfb94d74440b6ab814056e45bf5a94ccb7136307b1f3c9b1a3b5"
+  },
+  "nodeGroups": [],
+  "id": "AnrYnfntnaguG073",
+  "tags": []
+}
